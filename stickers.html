@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<style>
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+  .print-only {
+    display: block;
+  }
+}
+
+@page {
+  margin: 12mm -2cm -2cm 3mm;
+  size: 8.5in 11in;
+}
+
+body {
+  font: 16pt Palatino;
+}
+
+.sticker {
+  width: 38mm;
+  height: 38mm;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 3.5mm;
+  margin-bottom: 3mm;
+  display: inline-block;
+}
+
+.sticker div {
+  width: 38mm;
+  height: 38mm;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px solid;
+  border-radius: 50%;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+@media print {
+.sticker div {
+  border-color: transparent;
+}
+}
+
+textarea {
+  height: 10em;
+}
+
+</style>
+
+<body>
+<div id="content"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script type="text/babel">
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      labels: ["Garlic", "Onion"]
+    }
+  }
+
+  handleChange(e) {
+    this.setState({labels: e.target.value.split("\n")});
+  }
+
+  render() {
+    return (
+      <div>
+        <div class="no-print">
+          <textarea value={this.state.labels.join("\n")}
+                    onChange={(e) => this.handleChange(e)}
+                    autofocus="true"
+          />
+        </div>
+        {this.state.labels.map((label, i) =>
+          <div key={i} class="sticker">
+            <div>{label}</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('content'));
+
+</script>
+</body>

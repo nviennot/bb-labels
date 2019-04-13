@@ -43,7 +43,6 @@ body {
   border: 1px solid;
   border-radius: 50%;
   overflow: hidden;
-  word-break: break-all;
 }
 
 @media print {
@@ -76,7 +75,18 @@ class App extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({labels: e.target.value.split("\n")});
+    const labels = e.target.value.split("\n")
+    this.setState({labels});
+  }
+
+  formattedLabel(label) {
+    let [first, ...rest] = label.split(" ")
+    let result = [first]
+    rest.forEach(label => {
+      result.push(<br />)
+      result.push(label)
+    })
+    return result
   }
 
   render() {
@@ -90,7 +100,7 @@ class App extends React.Component {
         </div>
         {this.state.labels.map((label, i) =>
           <div key={i} class="sticker">
-            <div>{label}</div>
+            <div>{this.formattedLabel(label)}</div>
           </div>
         )}
       </div>
@@ -102,3 +112,48 @@ ReactDOM.render(<App />, document.getElementById('content'));
 
 </script>
 </body>
+
+<!-- 
+Cinnamon
+Fish Curry Masala
+Ajwain
+Fenugreek
+Shahi Masala
+Cumin Seeds
+Madras Curry
+Mustard Seeds
+Curry
+Ginger
+Garam Masala
+Kalonji
+Turmeric
+Onion
+Garlic
+Coriander Seeds
+Garlic Chutney
+Cumin
+Yellow Mustard Seeds
+Cardamom
+Mace
+Dill
+Chai Masala
+Cardamom Seeds
+Jethimadh
+Kasoori Methi
+Rosemary
+Cloves (whole)
+MSG
+Dhana Jeera
+Parsley
+Nutmeg (whole)
+Allspice
+Mustard
+Red Pepper
+Chili
+Oregano
+Celery Salt
+Seasoning Salt
+Coriander
+Toasted Sesame Seeds
+Corn Starch
+-->

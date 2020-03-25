@@ -45,6 +45,11 @@ body {
   overflow: hidden;
 }
 
+.sticker .modifier {
+  font-size: 0.65em;
+  text-transform: uppercase;
+}
+
 @media print {
   .sticker div {
     border-color: transparent;
@@ -70,7 +75,42 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      labels: ["Garlic", "Onion"]
+      labels: [
+"Anise Seeds",
+"Bay Leaves",
+"Cardamon (Ground)",
+"Cayenne Pepper (Ground)",
+"Celery Salt",
+"Celery Seeds",
+"Chaat Masala",
+"Chicken Seasoning",
+"Cinnamom (Ground)",
+"Cloves (Ground)",
+"Cloves (Whole)",
+"Coriander (Ground)",
+"Coriander Seeds",
+"Cumin (Ground)",
+"Cumin Seeds",
+"Dal Masala",
+"Fennel Seeds",
+"Garam Masala",
+"Garam Masala",
+"Karha",
+"Rosemary",
+"Thyme",
+"Black Pepper (Whole)",
+"Nutmeg (Whole)",
+"Paprika (Ground)",
+"Paprika Smoked (Ground)",
+"Red Chili Flakes",
+"Sambar Masala",
+"Steak Seasoning",
+"Surya Pitta Masala",
+"Surya Vata Masala",
+"Thaeesadi Choornam",
+"Turmeric (Ground)",
+"Vata Churna",
+]
     }
   }
 
@@ -79,8 +119,15 @@ class App extends React.Component {
     this.setState({labels});
   }
 
-  formattedLabel(label) {
-    let [first, ...rest] = label.split(" ")
+  formattedLabel(labels) {
+    let [first, ...rest] = labels.split(" ").map(label => {
+      if (label.startsWith("(")) {
+        label = label.replace("(", "").replace(")", "")
+        label = <span class="modifier">{label}</span>;
+      }
+      return label;
+    })
+
     let result = [first]
     rest.forEach(label => {
       result.push(<br />)
